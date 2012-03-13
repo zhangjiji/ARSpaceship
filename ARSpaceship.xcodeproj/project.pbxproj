@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F2B090A150F99B800799968 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2B0909150F99B800799968 /* CoreMotion.framework */; };
 		4FE5A035150F84EA00FA3AA3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE5A034150F84EA00FA3AA3 /* QuartzCore.framework */; };
 		4FE5A037150F84EA00FA3AA3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE5A036150F84EA00FA3AA3 /* OpenGLES.framework */; };
 		4FE5A039150F84EA00FA3AA3 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE5A038150F84EA00FA3AA3 /* OpenAL.framework */; };
@@ -423,6 +424,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F2B0909150F99B800799968 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		4FE5A030150F84EA00FA3AA3 /* ARSpaceship.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARSpaceship.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FE5A034150F84EA00FA3AA3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4FE5A036150F84EA00FA3AA3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -459,6 +461,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F2B090A150F99B800799968 /* CoreMotion.framework in Frameworks */,
 				4FE5A299150F865800FA3AA3 /* libcocos2d.a in Frameworks */,
 				4FE5A29A150F865800FA3AA3 /* libCocosDenshion.a in Frameworks */,
 				4FE5A035150F84EA00FA3AA3 /* QuartzCore.framework in Frameworks */,
@@ -497,6 +500,7 @@
 		4FE5A033150F84EA00FA3AA3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F2B0909150F99B800799968 /* CoreMotion.framework */,
 				4FE5A034150F84EA00FA3AA3 /* QuartzCore.framework */,
 				4FE5A036150F84EA00FA3AA3 /* OpenGLES.framework */,
 				4FE5A038150F84EA00FA3AA3 /* OpenAL.framework */,

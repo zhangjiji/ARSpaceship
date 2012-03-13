@@ -18,6 +18,8 @@
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
 
+@synthesize motionManager, yawLabel, posIn360Label;
+
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
@@ -40,81 +42,36 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init])) {
-		
-		// create and initialize a Label
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
+        yawLabel = [CCLabelTTF labelWithString:@"Yaw: " fontName:@"Marker Felt" fontSize:12];
+        posIn360Label = [CCLabelTTF labelWithString:@"360Pos: " fontName:@"Marker Felt" fontSize:12];
+        yawLabel.position =  ccp(50, 240);
+        posIn360Label.position =  ccp(50, 300);
+        [self addChild: yawLabel];
+        [self addChild:posIn360Label];
 
-		// ask director the the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
-	
-		// position the label on the center of the screen
-		label.position =  ccp( size.width /2 , size.height/2 );
-		
-		// add the label as a child to this Layer
-		[self addChild: label];
-		
-		
-		
-		//
-		// Leaderboards and Achievements
-		//
-		
-		// Default font size will be 28 points.
-		[CCMenuItemFont setFontSize:28];
-		
-		// Achievement Menu Item using blocks
-		CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
-			
-			
-			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
-			achivementViewController.achievementDelegate = self;
-			
-			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-			
-			[[app navController] presentModalViewController:achivementViewController animated:YES];
-			
-		}
-									   ];
-
-		// Leaderboard Menu Item using blocks
-		CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
-			
-			
-			GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
-			leaderboardViewController.leaderboardDelegate = self;
-			
-			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-			
-			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
-			
-		}
-									   ];
-		
-		CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, nil];
-		
-		[menu alignItemsHorizontallyWithPadding:20];
-		[menu setPosition:ccp( size.width/2, size.height/2 - 50)];
-		
-		// Add the menu to the layer
-		[self addChild:menu];
-
+		motionManager = [[CMMotionManager alloc] init];
+        motionManager.deviceMotionUpdateInterval = 1.0f / 60.0f;
+        if(motionManager.isDeviceMotionAvailable)
+            [motionManager startDeviceMotionUpdates];
+        
+        [self scheduleUpdate];
 	}
 	return self;
 }
 
-// on "dealloc" you need to release all your retained objects
-
-#pragma mark GameKit delegate
-
--(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
+-(void)update:(ccTime)deltaTime
 {
-	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app navController] dismissModalViewControllerAnimated:YES];
+    CMDeviceMotion* currentDeviceMotion = motionManager.deviceMotion;
+    CMAttitude* currentAttitude = currentDeviceMotion.attitude;
+    float yaw = roundf((float)CC_RADIANS_TO_DEGREES(currentAttitude.yaw));
+    
+    [yawLabel setString:[NSString stringWithFormat:@"Yaw: %.0f", yaw]];
+    
+    int positionIn360 = yaw;
+    if(positionIn360 < 0)
+        positionIn360 += 360;
+    
+    [posIn360Label setString:[NSString stringWithFormat:@"360Pos: %d", positionIn360]];
 }
 
--(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
-{
-	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app navController] dismissModalViewControllerAnimated:YES];
-}
 @end
